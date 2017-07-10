@@ -10,3 +10,7 @@ stages:
     - date
     - phpunit --bootstrap vendor/autoload.php tests/LdapTest.php
     - date
+  only:
+    - master
+  tags:
+    - latest
