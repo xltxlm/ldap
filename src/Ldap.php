@@ -8,6 +8,7 @@
 
 namespace xltxlm\ldap;
 
+use xltxlm\helper\Hclass\ConvertObject;
 use xltxlm\ldap\Config\LdapConfig;
 use xltxlm\ldap\Config\LdapItemModel;
 
@@ -67,7 +68,9 @@ class Ldap
     public function insert()
     {
         $connect = $this->getLdapConfig()->__invoke();
-        return ldap_add($connect, "uid={$this->getLdapItemModel()->getUid()},{$this->getLdapConfig()->getUserdn()}", $info);
+        $info = (new ConvertObject($this->getLdapItemModel()))
+            ->toArray();
+        return ldap_add($connect, $this->getLdapItemModel()->getUserdn() . $this->getLdapConfig()->getUserdn(), $info);
     }
 
     /**
@@ -76,14 +79,17 @@ class Ldap
     public function delete()
     {
         $connect = $this->getLdapConfig()->__invoke();
-        ldap_delete($connect,$user_dn);
+        ldap_delete($connect, $this->getLdapItemModel()->getUserdn() . $this->getLdapConfig()->getUserdn());
     }
 
     /**
      * 修改密码
      */
-    public function changePassword()
+    public function changePassword($passwprd)
     {
-
+        $connect = $this->getLdapConfig()->__invoke();
+        $values["userPassword"] = "{SHA}" . base64_encode(pack("H*", sha1($passwprd)));  //密码sha1加密
+        $user_dn = $this->getLdapItemModel()->getUserdn() . $this->getLdapConfig()->getUserdn();
+        ldap_mod_replace($connect, $user_dn, $values);
     }
 }

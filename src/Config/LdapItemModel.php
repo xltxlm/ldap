@@ -16,6 +16,9 @@ namespace xltxlm\ldap\Config;
 class LdapItemModel
 {
     protected $uid = "";
+    protected $cn = "";
+    protected $sn = "";
+    protected $uidNumber = 1;
     protected $objectclass = [
         'top',
         'posixAccount',
@@ -25,6 +28,21 @@ class LdapItemModel
     protected $homedirectory = '';
     protected $loginShell = '/bin/sh';
     protected $userPassword = "";
+
+
+    /**
+     * @param string $alaisName
+     * @return LdapItemModel
+     */
+    public function setAlaisName(string $alaisName): LdapItemModel
+    {
+        $this->alaisName = $alaisName;
+        if (is_string($this->getUid())) {
+            $this->uid = $this->cn = $this->sn = [$this->uid];
+        }
+        $this->uid[] = $this->cn[] = $this->sn[] = $alaisName;
+        return $this;
+    }
 
     /**
      * @return string
@@ -59,8 +77,17 @@ class LdapItemModel
      */
     public function setUid($uid)
     {
-        $this->uid = $uid;
+        $this->uid = $this->cn = $this->sn = $uid;
         return $this;
+    }
+
+    public function getUserdn()
+    {
+        $uid = $this->getUid();
+        if (is_array($uid)) {
+            $uid = array_shift($uid);
+        }
+        return "cn={$uid},";
     }
 
     public function __invoke(): LdapItemModel

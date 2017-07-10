@@ -16,7 +16,7 @@ use xltxlm\helper\Hclass\ConvertObject;
  * Class LdapConfig
  * @package xltxlm\ldap\Config
  */
-abstract class LdapConfig implements TestConfig
+class LdapConfig implements TestConfig
 {
     protected $ldap_connect;
     /** @var string 服务器地址/域名 */
