@@ -15,6 +15,9 @@ stages:
     - date
     - phpunit --bootstrap vendor/autoload.php tests/LdapTest.php
     - date
+    - git remote set-url origin  git@github.com:xltxlm/ldap.git
+    - git push --all
+    - date
   only:
     - master
   tags:
