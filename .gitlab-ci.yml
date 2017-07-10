@@ -6,6 +6,8 @@ stages:
   image: registry.cn-hangzhou.aliyuncs.com/xialintai/phpnginx
   script:
     - date
+    - composer config -g repo.packagist composer https://packagist.phpcomposer.com
+    - date
     - composer up
     - date
     - phpunit --bootstrap vendor/autoload.php tests/LdapTest.php
