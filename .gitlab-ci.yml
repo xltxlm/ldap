@@ -1,0 +1,12 @@
+stages:
+  - 单元测试
+
+单元测试:
+  stage: 单元测试
+  image: registry.cn-hangzhou.aliyuncs.com/xialintai/phpnginx
+  script:
+    - date
+    - composer up
+    - date
+    - phpunit --bootstrap vendor/autoload.php tests/LdapTest.php
+    - date

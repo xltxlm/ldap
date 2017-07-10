@@ -1,0 +1,29 @@
+{
+  "name": "xltxlm/ldap",
+  "description": "ldap基础操作功能",
+  "authors": [
+    {
+      "name": "xltxlm",
+      "email": "xltxlm@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "xltxlm/helper": "*",
+    "xltxlm/config": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "xltxlm\\ldap\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "xltxlm\\ldap\\": [
+        "./"
+      ]
+    }
+  }
+}
