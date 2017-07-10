@@ -4,9 +4,6 @@ stages:
 单元测试:
   stage: 单元测试
   image: registry.cn-hangzhou.aliyuncs.com/xialintai/phpnginx
-  cache:
-      paths:
-        - vendor
   script:
     - date
     - composer config -g repo.packagist composer https://packagist.phpcomposer.com
