@@ -9,7 +9,7 @@ stages:
         - vendor
   script:
     - date
-    - composer config -g repo.packagist composer https://packagist.phpcomposer.com
+    #- composer config -g repo.packagist composer https://packagist.phpcomposer.com
     - date
     - composer up
     - date
