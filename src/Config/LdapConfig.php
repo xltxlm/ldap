@@ -131,6 +131,9 @@ class LdapConfig implements TestConfig
         if ($md5s[$tns]) {
             $this->ldap_connect = $md5s[$tns];
         } else {
+            if (!$this->getHost() || !$this->getAdminrdn() || !$this->getPassword()) {
+                throw new \Exception("没有服务器配置");
+            }
             $this->ldap_connect = ldap_connect($this->getHost(), $this->getPort());
             ldap_set_option($this->ldap_connect, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($this->ldap_connect, LDAP_OPT_REFERRALS, 0);

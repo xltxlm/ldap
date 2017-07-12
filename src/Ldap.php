@@ -85,11 +85,21 @@ class Ldap
     /**
      * 修改密码
      */
-    public function changePassword($passwprd)
+    public function changePassword()
     {
         $connect = $this->getLdapConfig()->__invoke();
-        $values["userPassword"] = "{SHA}" . base64_encode(pack("H*", sha1($passwprd)));  //密码sha1加密
+        $values["userPassword"] = "{SHA}" . base64_encode(pack("H*", sha1($this->getLdapItemModel()->getUserPasswordOld())));  //密码sha1加密
         $user_dn = $this->getLdapItemModel()->getUserdn() . $this->getLdapConfig()->getUserdn();
         ldap_mod_replace($connect, $user_dn, $values);
+    }
+
+    /**
+     * 校验账户密码是否正确
+     */
+    public function check(): bool
+    {
+        $connect = $this->getLdapConfig()->__invoke();
+        $user_dn = $this->getLdapItemModel()->getUserdn() . $this->getLdapConfig()->getUserdn();
+        return ldap_bind($connect, $user_dn, $this->getLdapItemModel()->getUserPasswordOld());
     }
 }

@@ -28,6 +28,25 @@ class LdapItemModel
     protected $homedirectory = '';
     protected $loginShell = '/bin/sh';
     protected $userPassword = "";
+    protected $userPasswordOld = "";
+
+    /**
+     * @return string
+     */
+    public function getUserPasswordOld(): string
+    {
+        return $this->userPasswordOld;
+    }
+
+    /**
+     * @param string $userPasswordOld
+     * @return LdapItemModel
+     */
+    public function setUserPasswordOld(string $userPasswordOld): LdapItemModel
+    {
+        $this->userPasswordOld = $userPasswordOld;
+        return $this;
+    }
 
 
     /**
@@ -58,6 +77,7 @@ class LdapItemModel
      */
     public function setUserPassword(string $userPassword): LdapItemModel
     {
+        $this->setUserPasswordOld($userPassword);
         $this->userPassword = "{SHA}" . base64_encode(pack("H*", sha1($userPassword)));;
         return $this;
     }
